@@ -18,3 +18,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+// 管理画面トップページ
+Route::get('/admin/top', function () {
+    return view('admin.top');
+});
