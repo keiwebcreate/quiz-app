@@ -6,10 +6,17 @@
       </svg>
       <span class="ml-3 text-xl">管理画面</span>
     </a>
-    <button class="inline-flex items-center bg-gray-700 border-0 py-1 px-3 focus:outline-none hover:bg-gray-800 rounded text-white mt-4 md:mt-0 md:ml-auto">ログアウト
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button>
+    <!-- Authentication -->
+    <form method="POST" action="{{ route('logout') }}" class="md:ml-auto">
+        @csrf
+        <button class="inline-flex items-center bg-gray-700 border-0 py-1 px-3 focus:outline-none hover:bg-gray-800 rounded text-white mt-4 md:mt-0 " :href="route('logout')" onclick="event.preventDefault();this.closest('form').submit();">ログアウト
+        </button>
+                            {{-- <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-dropdown-link> --}}
+    </form>
+
   </div>
 </header>
