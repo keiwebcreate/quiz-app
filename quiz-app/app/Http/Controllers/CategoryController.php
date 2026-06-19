@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 
 
 class CategoryController extends Controller
@@ -42,11 +43,12 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * カテゴリー詳細画面表示
      */
-    public function show(Category $category)
+    public function show(Request $request, string $categoryID)
     {
-        //
+        $category = Category::findOrFail($categoryID);
+        return view('admin.categories.show', ['category' => $category]);
     }
 
     /**
