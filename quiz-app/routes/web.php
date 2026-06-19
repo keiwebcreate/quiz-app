@@ -36,5 +36,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/{categoryID}/edit', [CategoryController::class, 'edit'])->name('edit');
         // カテゴリー更新処理
         Route::put('/{categoryID}/update', [CategoryController::class, 'update'])->name('update');
-    });
+        // カテゴリー削除処理
+        Route::delete('/{categoryID}/destroy', [CategoryController::class, 'destroy'])->name('destroy');
+        });
 });
