@@ -32,5 +32,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::post('/store', [CategoryController::class, 'store'])->name('store');
         // カテゴリー詳細画面
         Route::get('/{categoryID}', [CategoryController::class, 'show'])->name('show');
+        // カテゴリー編集画面表示
+        Route::get('/{categoryID}/edit', [CategoryController::class, 'edit'])->name('edit');
+        // カテゴリー更新処理
+        Route::put('/{categoryID}/update', [CategoryController::class, 'update'])->name('update');
     });
 });
