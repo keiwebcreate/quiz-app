@@ -22,9 +22,7 @@ require __DIR__.'/auth.php';
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // 管理画面トップページ
-    Route::get('/top', function () {
-        return view('admin.top');
-    })->name('top');
+    Route::get('/top', [CategoryController::class, 'index'])->name('top');
 
     // カテゴリー管理
     Route::prefix('categories')->name('categories.')->group(function () {

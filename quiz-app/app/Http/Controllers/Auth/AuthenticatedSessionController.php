@@ -16,7 +16,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('admin.categories.create');
+        // return view('admin.categories.create');
+        return view('auth.login');
     }
 
     /**
