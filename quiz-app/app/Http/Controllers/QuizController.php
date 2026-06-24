@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreQuizRequest;
 use App\Http\Requests\UpdateQuizRequest;
 use App\Models\Quiz;
+use App\Models\Option;
 use Illuminate\Http\Request;
 
 class QuizController extends Controller
@@ -22,15 +23,47 @@ class QuizController extends Controller
      */
     public function create(Request $request, string $categoryID)
     {
-        return view('admin.quizzes.create', ['categoryId' => $categoryID]);
+        return view('admin.quizzes.create', ['categoryID' => $categoryID]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * クイズ新規登録処理
      */
-    public function store(StoreQuizRequest $request)
+    public function store(StoreQuizRequest $request, string $categoryID)
     {
-        //
+        //先にクイズを登録する
+        $quiz = new Quiz();
+        $quiz->category_id = $categoryID;
+        $quiz->question = $request->question;
+        $quiz->explanation = $request->explanation;
+        $quiz->save();
+        // クイズIDをもとに選択肢（option）を登録する
+        $quizId = $quiz->id;
+        $option1 = new Option();
+        $option1->quiz_id = $quiz->id;
+        $option1->content = $request->content1;
+        $option1->is_correct = $request->isCorrect1;
+        $option1->save();
+
+        $option2 = new Option();
+        $option2->quiz_id = $quiz->id;
+        $option2->content = $request->content2;
+        $option2->is_correct = $request->isCorrect2;
+        $option2->save();
+
+        $option3 = new Option();
+        $option3->quiz_id = $quiz->id;
+        $option3->content = $request->content3;
+        $option3->is_correct = $request->isCorrect3;
+        $option3->save();
+
+        $option4 = new Option();
+        $option4->quiz_id = $quiz->id;
+        $option4->content = $request->content4;
+        $option4->is_correct = $request->isCorrect4;
+        $option4->save();
+
+        return redirect()->route('admin.categories.show', ['categoryID' =>$categoryID]);
     }
 
     /**
