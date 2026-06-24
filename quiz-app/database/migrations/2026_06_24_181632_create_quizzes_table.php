@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->constrained()->onUpdate('cascade')->onDelete('cascade')->comment('カテゴリーID');
+            $table->text('question')->comment('クイズ問題文');
+            $table->text('explanation')->comment('クイズ解説');
             $table->timestamps();
         });
     }
