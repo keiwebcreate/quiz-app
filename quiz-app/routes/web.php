@@ -33,20 +33,24 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         // カテゴリー新規登録処理
         Route::post('/store', [CategoryController::class, 'store'])->name('store');
         // カテゴリー詳細画面 兼 クイズ一覧画面表示
-        Route::get('/{categoryID}', [CategoryController::class, 'show'])->name('show');
+        Route::get('/{categoryId}', [CategoryController::class, 'show'])->name('show');
         // カテゴリー編集画面表示
-        Route::get('/{categoryID}/edit', [CategoryController::class, 'edit'])->name('edit');
+        Route::get('/{categoryId}/edit', [CategoryController::class, 'edit'])->name('edit');
         // カテゴリー更新処理
-        Route::put('/{categoryID}/update', [CategoryController::class, 'update'])->name('update');
+        Route::put('/{categoryId}/update', [CategoryController::class, 'update'])->name('update');
         // カテゴリー削除処理
-        Route::delete('/{categoryID}/destroy', [CategoryController::class, 'destroy'])->name('destroy');
+        Route::delete('/{categoryId}/destroy', [CategoryController::class, 'destroy'])->name('destroy');
 
         // クイズ管理
-        Route::prefix('/{categoryID}/quizzes')->name('quizzes.')->group(function () {
+        Route::prefix('/{categoryId}/quizzes')->name('quizzes.')->group(function () {
             // クイズ新規登録画面表示
             Route::get('/create', [QuizController::class, 'create'])->name('create');
             // クイズ新規登録処理
             Route::post('/store', [QuizController::class, 'store'])->name('store');
+            // クイズの編集画面表示
+            Route::get('/{quizId}/edit', [QuizController::class, 'edit'])->name('edit');
+            // クイズ更新処理
+            Route::put('/{quizId}/update', [QuizController::class, 'update'])->name('update');
         });
     });
 });

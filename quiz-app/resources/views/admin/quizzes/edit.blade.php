@@ -6,7 +6,7 @@
             </div>
             <div class="lg:w-1/2 md:w-2/3 mx-auto">
                 {{-- <div class="flex flex-wrap -m-2 w-full"> --}}
-                <form action="{{ route('admin.categories.quizzes.store', ['categoryId' => $categoryId]) }}" method="POST">
+                <form action="" method="POST">
                     @csrf
                     {{-- 問題文 --}}
                     <div class="p-2 w-full">

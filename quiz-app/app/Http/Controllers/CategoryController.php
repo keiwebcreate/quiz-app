@@ -45,40 +45,40 @@ class CategoryController extends Controller
     /**
      * カテゴリー詳細画面表示 兼 クイズ一覧表示画面
      */
-    public function show(Request $request, string $categoryID)
+    public function show(Request $request, string $categoryId)
     {
-        $category = Category::with('quizzes')->findOrFail($categoryID);
+        $category = Category::with('quizzes')->findOrFail($categoryId);
         return view('admin.categories.show', ['category' => $category, 'quizzes' => $category->quizzes]);
     }
 
     /**
      * カテゴリー編集画面表示
      */
-    public function edit(Request $request, string $categoryID)
+    public function edit(Request $request, string $categoryId)
     {
-        $category = Category::findOrFail($categoryID);
+        $category = Category::findOrFail($categoryId);
         return view('admin.categories.edit', ['category' => $category]);
     }
 
     /**
      * カテゴリー更新処理
      */
-    public function update(UpdateCategoryRequest $request, string $categoryID)
+    public function update(UpdateCategoryRequest $request, string $categoryId)
     {
-        $category = Category::findOrFail($categoryID);
+        $category = Category::findOrFail($categoryId);
         $category->name = $request->name;
         $category->description = $request->description;
         $category->save();
 
-        return redirect()->route('admin.categories.show', ['categoryID' => $categoryID]);
+        return redirect()->route('admin.categories.show', ['categoryId' => $categoryId]);
     }
 
     /**
      * カテゴリー削除処理
      */
-    public function destroy(string $categoryID)
+    public function destroy(string $categoryId)
     {
-        $category = Category::findOrFail($categoryID);
+        $category = Category::findOrFail($categoryId);
         $category->delete();
         return redirect()->route('admin.top');
     }

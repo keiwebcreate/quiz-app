@@ -6,7 +6,7 @@
         </div>
         <div class="lg:w-1/2 md:w-2/3 mx-auto">
         {{-- <div class="flex flex-wrap -m-2 w-full"> --}}
-            <form action="{{ route('admin.categories.update', ['categoryID' => $category->id]) }}" method="POST">
+            <form action="{{ route('admin.categories.update', ['categoryId' => $category->id]) }}" method="POST">
                 @method('PUT')
                 @csrf
                 <div class="p-2 w-full">
@@ -30,7 +30,7 @@
                 @enderror
                 </div>
                 <div class="p-2 w-full">
-                    <button type="submit" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">行更新</button>
+                    <button type="submit" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>
                 </div>
             </form>
         {{-- </div> --}}
