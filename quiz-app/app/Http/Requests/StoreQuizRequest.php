@@ -29,10 +29,10 @@ class StoreQuizRequest extends FormRequest
             'content2' => ['required', 'string', 'max:255'],
             'content3' => ['required', 'string', 'max:255'],
             'content4' => ['required', 'string', 'max:255'],
-            'is_correct1' => ['required', 'integer', 'in:0,1'],
-            'is_correct2' => ['required', 'integer', 'in:0,1'],
-            'is_correct3' => ['required', 'integer', 'in:0,1'],
-            'is_correct4' => ['required', 'integer', 'in:0,1'],
+            'isCorrect1' => ['required', 'integer', 'in:0,1'],
+            'isCorrect2' => ['required', 'integer', 'in:0,1'],
+            'isCorrect3' => ['required', 'integer', 'in:0,1'],
+            'isCorrect4' => ['required', 'integer', 'in:0,1'],
         ];
     }
 }

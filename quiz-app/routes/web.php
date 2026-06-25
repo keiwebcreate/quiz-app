@@ -32,7 +32,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
         // カテゴリー新規登録処理
         Route::post('/store', [CategoryController::class, 'store'])->name('store');
-        // カテゴリー詳細画面
+        // カテゴリー詳細画面 兼 クイズ一覧画面表示
         Route::get('/{categoryID}', [CategoryController::class, 'show'])->name('show');
         // カテゴリー編集画面表示
         Route::get('/{categoryID}/edit', [CategoryController::class, 'edit'])->name('edit');
