@@ -29,11 +29,11 @@ class QuizController extends Controller
     /**
      * クイズ新規登録処理
      */
-    public function store(StoreQuizRequest $request, string $categoryID)
+    public function store(StoreQuizRequest $request, string $categoryId)
     {
         //先にクイズを登録する
         $quiz = new Quiz();
-        $quiz->category_id = $categoryID;
+        $quiz->category_id = $categoryId;
         $quiz->question = $request->question;
         $quiz->explanation = $request->explanation;
         $quiz->save();
@@ -95,7 +95,7 @@ class QuizController extends Controller
         // $option4->is_correct = $request->isCorrect4;
         // $option4->save();
 
-        return redirect()->route('admin.categories.show', ['categoryID' =>$categoryID]);
+        return redirect()->route('admin.categories.show', ['categoryId' =>$categoryId]);
     }
 
     /**
@@ -117,9 +117,69 @@ class QuizController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateQuizRequest $request, Quiz $quiz)
+    public function update(UpdateQuizRequest $request, string $categoryId, string $quizId)
     {
-        //
+        //クイズの更新
+        $quiz = Quiz::findOrFail($quizId);
+        $quiz->category_id = $categoryId;
+        $quiz->question = $request->question;
+        $quiz->explanation = $request->explanation;
+        $quiz->save();
+        //選択肢の更新
+        $options =[
+            [
+                'optionId' => (int)$request->optionId1,
+                'quiz_id' => $quiz->id,
+                'content' => $request->content1,
+                'is_correct' => $request->isCorrect1,
+            ],
+            [
+                'optionId' => (int)$request->optionId2,
+                'quiz_id' => $quiz->id,
+                'content' => $request->content2,
+                'is_correct' => $request->isCorrect2,
+            ],
+            [
+                'optionId' => (int)$request->optionId3,
+                'quiz_id' => $quiz->id,
+                'content' => $request->content3,
+                'is_correct' => $request->isCorrect3,
+            ],
+            [
+                'optionId' => (int)$request->optionId4,
+                'quiz_id' => $quiz->id,
+                'content' => $request->content4,
+                'is_correct' => $request->isCorrect4,
+            ]
+        ];
+        foreach($options as $option) {
+            $UpdateOption = Option::findOrFail($option['optionId']);
+            $UpdateOption->quiz_id = $option['quiz_id'];
+            $UpdateOption->content = $option['content'];
+            $UpdateOption->is_correct = $option['is_correct'];
+            $UpdateOption->save();
+        }
+
+        // $option2 = Option::findOrFail((int)$request->optionId2);
+        // $option2->quiz_id = $quiz->id;
+        // $option2->content = $request->content2;
+        // $option2->is_correct = $request->isCorrect2;
+        // $option2->save();
+
+        // $option3 = Option::findOrFail((int)$request->optionId3);
+        // $option3->quiz_id = $quiz->id;
+        // $option3->content = $request->content3;
+        // $option3->is_correct = $request->isCorrect3;
+        // $option3->save();
+
+        // $option4 = Option::findOrFail((int)$request->optionId4);
+        // $option4->quiz_id = $quiz->id;
+        // $option4->content = $request->content4;
+        // $option4->is_correct = $request->isCorrect4;
+        // $option4->save();
+
+        //カテゴリー詳細画面にリダイレクト
+         return redirect()->route('admin.categories.show', ['categoryId' =>$categoryId]);
     }
 
     /**
