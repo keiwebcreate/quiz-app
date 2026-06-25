@@ -21,9 +21,9 @@ class QuizController extends Controller
     /**
      * クイズ新規登録画面
      */
-    public function create(Request $request, string $categoryID)
+    public function create(Request $request, string $categoryId)
     {
-        return view('admin.quizzes.create', ['categoryID' => $categoryID]);
+        return view('admin.quizzes.create', ['categoryId' => $categoryId]);
     }
 
     /**
@@ -95,7 +95,7 @@ class QuizController extends Controller
         // $option4->is_correct = $request->isCorrect4;
         // $option4->save();
 
-        return redirect()->route('admin.categories.show', ['categoryId' =>$categoryId]);
+        return redirect()->route('admin.categories.show', ['categoryId' => $categoryId]);
     }
 
     /**
@@ -185,8 +185,10 @@ class QuizController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Quiz $quiz)
+    public function destroy(Request $request, string $categoryId, string $quizId)
     {
-        //
+        $quiz = Quiz::findOrFail($quizId);
+        $quiz->delete();
+        return redirect()->route('admin.categories.show', ['categoryId' =>$categoryId]);
     }
 }
