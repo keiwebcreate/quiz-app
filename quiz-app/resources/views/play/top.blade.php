@@ -11,8 +11,7 @@
             <div class="flex flex-wrap -m-4">
                 @foreach ($categories as $category)
                     <div class="xl:w-1/4 md:w-1/2 p-4">
-                        <a href="" class="bg-gray-100 p-6 rounded-lg block">
-
+                        <a href="{{ route('categories', ['categoryId' => $category->id]) }}" class="bg-gray-100 p-6 rounded-lg block">
                             <h2 class="text-lg text-gray-900 font-medium title-font mb-4">{{ $category->name }}</h2>
                             <p class="leading-relaxed text-base">{{ $category->description }}</p>
                         </a>

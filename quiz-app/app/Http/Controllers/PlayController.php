@@ -15,4 +15,13 @@ class PlayController extends Controller
             'categories' => $categories
         ]);
     }
+
+    // クイズスタート画面表示
+    public function categories(Request $request, string $categoryId) {
+        $category = Category::withCount('quizzes')->findOrFail($categoryId);
+        return view('play.start', [
+            'category' => $category,
+            'quizzesCount' => $category->quizzes_count,
+        ]);
+    }
 }
