@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PlayController::class, 'top'])->name('top');
 // クイズスタート画面
 Route::get('/categories/{categoryId}', [PlayController::class, 'categories'])->name('categories');
+// クイズ出題画面
+Route::get('/categories/{categoryId}/quizzes', [PlayController::class, 'quizzes'])->name('categories.quizzes');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
