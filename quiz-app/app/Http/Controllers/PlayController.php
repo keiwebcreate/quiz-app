@@ -56,15 +56,23 @@ class PlayController extends Controller
         $correctOptions = array_filter($quizOptions, function($option) {
             return $option['is_correct'] === 1;
         });
+
+        //IDの数字だけを抽出する。
+        $correctOptionIds = array_map(function ($option) {
+            return $option['id'];
+        },$correctOptions);
+
         // プレイヤーが選んだ選択肢の個数と正解の選択肢の個数が一致するか判定す る
-            if (count($selectedOptions) !== count($correctOptions) )
+            if (count($selectedOptions) !== count($correctOptionIds) )
             {
                 return false;
             }
 
+
+
         // プレイヤーが選んだ選択肢のIDと正解のIDがすべて一致することを判定する
         foreach ($selectedOptions as $selectedOption) {
-            if (!in_array($selectedOption, $correctOptions)) {
+            if (!in_array((int)$selectedOption, $correctOptionIds)) {
                 return false;
             }
         }
