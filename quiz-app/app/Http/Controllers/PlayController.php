@@ -42,12 +42,18 @@ class PlayController extends Controller
 
     public function answer(Request $request, string $categoryId) {
         $quizId = $request->quizId;
-        $optionId = $request->optionId == null ? [] : $request->optionId;
+        $selectedOptions = $request->optionId == null ? [] : $request->optionId;
         $category = Category::with('quizzes.options')->findOrFail($categoryId);
         $quiz = $category->quizzes()->firstWhere('id', $quizId);
         $quizOptions =$quiz->options->toArray();
-        $result = $this->isCorrectAnswer($optionId, $quizOptions);
-        return  view('play.answer');
+        $isCorrectAnswer = $this->isCorrectAnswer($selectedOptions, $quizOptions);
+        return  view('play.answer', [
+            'isCorrectAnswer' => $isCorrectAnswer,
+            'quiz' => $quiz->toArray(),
+            'quizOptions' => $quizOptions,
+            'selectedOptions' => $selectedOptions,
+            '$categoryId' => $categoryId
+        ]);
     }
 
     // プレイヤーの回答が正解か不正解か判定
