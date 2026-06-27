@@ -2,13 +2,12 @@
     <section class="text-gray-600 body-font">
         <div class="container px-5 py-24 mx-auto">
             <div class="flex flex-col text-center w-full mb-20">
-                <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">問題</h1>
-                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">{{ $quiz['question'] }}</p>
+                <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">正解</h1>
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">問題：問題文です</p>
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">解説：解説です</p>
             </div>
-            <form action="{{ route('categories.quizzes.answer', ['categoryId' => $categoryId]) }}" method="POST">
-                @csrf
                 {{-- クイズIDを送る --}}
-                <input type="hidden" name="quizId" value="{{ $quiz['id'] }}">
+                {{-- <input type="hidden" name="quizId" value="{{ $quiz['id'] }}"> --}}
                 <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                     <table class="table-auto w-full text-left whitespace-no-wrap">
                         <thead>
@@ -21,17 +20,19 @@
                                     選択肢</th>
                                 <th
                                     class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                    正解or 不正解</th>
+                                <th
+                                    class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">あなたの回答
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @for ($i = 0; $i < count($quiz['options']); $i++)
+                            @for ($i = 0; $i < 4; $i++)
                                 <tr>
                                     <td class="px-4 py-3">{{ $i + 1 }}</td>
-                                    <td class="px-4 py-3">{{ $quiz['options'][$i]['content'] }}</td>
-                                    <td class="w-10 text-center">
-                                        <input name="optionId[]" type="checkbox" value="{{$quiz['options'][$i]['id']}}">
-                                    </td>
+                                    <td class="px-4 py-3">選択肢</td>
+                                    <td class="px-4 py-3">〇</td>
+                                    <td class="px-4 py-3">〇</td>
                                 </tr>
                             @endfor
 
@@ -40,10 +41,9 @@
                 </div>
                 <div class="flex pl-4 mt-4 lg:w-2/3 w-full mx-auto">
                     <button
-                        type="submit"
-                        class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">回答</button>
+
+                        class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">次の問題へ</button>
                 </div>
-            </form>
         </div>
     </section>
 </x-play-layout>
