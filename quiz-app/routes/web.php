@@ -2,22 +2,34 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PlayController;
 use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+// Player画面
+Route::get('/', [PlayController::class, 'top'])->name('top');
+
+Route::prefix('/categories/{categoryId}')->name('categories.')->group(function() {
+    // クイズスタート画面
+    Route::get('/', [PlayController::class, 'categories'])->name('start');
+    // クイズ出題画面
+    Route::get('/quizzes', [PlayController::class, 'quizzes'])->name('quizzes');
+    //クイズ回答画面
+    Route::post('/quizzes/answer', [PlayController::class, 'answer'])->name('quizzes.answer');
+    // リザルト画面
+    Route::get('/quizzes/result', [PlayController::class, 'result'])->name('quizzes.result');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__.'/auth.php';
 
