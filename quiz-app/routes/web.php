@@ -8,14 +8,18 @@ use Illuminate\Support\Facades\Route;
 
 // Player画面
 Route::get('/', [PlayController::class, 'top'])->name('top');
-// クイズスタート画面
-Route::get('/categories/{categoryId}', [PlayController::class, 'categories'])->name('categories');
-// クイズ出題画面
-Route::get('/categories/{categoryId}/quizzes', [PlayController::class, 'quizzes'])->name('categories.quizzes');
-//クイズ回答画面
-Route::post('/categories/{categoryId}/quizzes/answer', [PlayController::class, 'answer'])->name('categories.quizzes.answer');
-// リザルト画面
-Route::get('categories/{categoryId}/quizzes/result', [PlayController::class, 'result'])->name('categories.quizzes.result');
+
+Route::prefix('/categories/{categoryId}')->name('categories.')->group(function() {
+    // クイズスタート画面
+    Route::get('/', [PlayController::class, 'categories'])->name('start');
+    // クイズ出題画面
+    Route::get('/quizzes', [PlayController::class, 'quizzes'])->name('quizzes');
+    //クイズ回答画面
+    Route::post('/quizzes/answer', [PlayController::class, 'answer'])->name('quizzes.answer');
+    // リザルト画面
+    Route::get('/quizzes/result', [PlayController::class, 'result'])->name('quizzes.result');
+});
+
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
