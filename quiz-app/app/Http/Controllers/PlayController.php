@@ -29,8 +29,6 @@ class PlayController extends Controller
 
     // クイズ出題画面
     public function quizzes(Request $request, string $categoryId) {
-
-    // session()->forget('resultArray');
         // カテゴリーにひもづくクイズと選択肢をすべて取得
         $category = Category::with('quizzes.options')->findOrFail($categoryId);
         //クイズをランダムに選ぶ
@@ -63,7 +61,9 @@ class PlayController extends Controller
         })->first();
 
         if (!$noAnswerResult) {
-            dd('未回答のクイズはなくなりました');
+            // すべてのクイズに回答済みの場合はリザルト画面にリダイレクトする
+            // dd('未回答のクイズはなくなりました');
+            return redirect()->route('categories.quizzes.result', ['categoryId' => $categoryId]);
         }
 
         //クイズIDに紐づくクイズを取得
@@ -102,6 +102,23 @@ class PlayController extends Controller
             'quizOptions' => $quizOptions,
             'selectedOptions' => $selectedOptions,
             'categoryId' => $categoryId
+        ]);
+    }
+    // リザルト画面表示
+    public function result(Request $request, string $categoryId){
+
+        $resultArray = session('resultArray');
+
+        $questionCount = count($resultArray);
+        $correctCount = collect($resultArray)->filter(function($result) {
+            return $result['result'] === true;
+        })->count();
+        // dd($categoryId, $questionCount, $correctCount);
+        
+        return view('play.result',[
+            'categoryId' => $categoryId,
+            'questionCount' => $questionCount,
+            'correctCount' => $correctCount
         ]);
     }
 
